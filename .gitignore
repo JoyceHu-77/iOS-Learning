@@ -19,6 +19,9 @@ DerivedData
 .DS_Store
 *.pyc
 *.xcuserstate
+*.xcworkspacedata
+*.xcplayground
+
 
 # CocoaPods
 #
