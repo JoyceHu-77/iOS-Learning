@@ -2,6 +2,7 @@ import UIKit
 
 // https://swiftrocks.com/whats-type-and-self-swift-metatypes.html
 // https://juejin.cn/post/6844903725199261710
+// https://zhuanlan.zhihu.com/p/142079976
 // 元类型就是类型的类型。（包括class、struct、protocol）
 // 元类型可作为参数传递
 // .self 取到的是静态的元类型，声明的时候是什么类型就是什么类型。type(of:) 取的是运行时候的元类型，也就是这个实例 的类型。
