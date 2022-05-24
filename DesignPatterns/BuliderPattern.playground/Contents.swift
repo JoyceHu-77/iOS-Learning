@@ -160,9 +160,11 @@ class CoreDataProvider {
     func fetch<Model: DomainModel>(_ operations: [CoreDataQueryBuilder<Model>.Query]) -> [Model] {
         for item in operations {
             switch item {
-            case .filter(_):
+            case .filter(let predicate):
                 print("CoreDataProvider: executing the 'filter' operation.")
                 /// Set a 'predicate' for a NSFetchRequest.
+                let user = User(id: 1, age: 10, email: "163")
+                predicate(user as! Model)
                 break
             case .limit(_):
                 print("CoreDataProvider: executing the 'limit' operation.")
