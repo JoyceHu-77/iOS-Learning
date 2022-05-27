@@ -29,7 +29,7 @@ class Product1 {
 }
 
 // 设置产品和获取产品的行为，builder生产对应的product
-class concreteBuilder1: Bulider {
+class ConcreteBuilder1: Bulider {
     
     private var product = Product1()
     
@@ -78,7 +78,7 @@ class Director {
 }
 
 func createProduct1(by director: Director) {
-    let builder = concreteBuilder1()
+    let builder = ConcreteBuilder1()
     director.update(builder: builder)
     
     print("standard basic product:")
