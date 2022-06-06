@@ -82,3 +82,134 @@ context.request1()
 context.request2()
 context.request2()
 
+
+// MARK: - example
+
+protocol TrackingState {
+    func startTracking()
+    func stopTracking()
+    func pauseTracking(for time: TimeInterval)
+    func makeCheckIn()
+    func findMyChildren()
+}
+
+class LocationTracker {
+    
+    // location tracking is enabled by default
+    private lazy var trackingState: TrackingState = EnableTrackingState(tracker: self)
+    
+    func startTracking() {
+        trackingState.startTracking()
+    }
+    
+    func stopTracking() {
+        trackingState.stopTracking()
+    }
+    
+    func pauseTracking(for time: TimeInterval) {
+        trackingState.pauseTracking(for: time)
+    }
+    
+    func makeCheckIn() {
+        trackingState.makeCheckIn()
+    }
+    
+    func findMyChildren() {
+        trackingState.findMyChildren()
+    }
+    
+    func update(state: TrackingState) {
+        trackingState = state
+    }
+}
+
+class EnableTrackingState: TrackingState {
+    private weak var tracker: LocationTracker?
+    
+    init(tracker: LocationTracker?) {
+        self.tracker = tracker
+    }
+    
+    func startTracking() {
+        print("EnabledTrackingState: startTracking is invoked")
+        print("EnabledTrackingState: tracking location....1")
+        print("EnabledTrackingState: tracking location....2")
+        print("EnabledTrackingState: tracking location....3")
+    }
+    
+    func stopTracking() {
+        print("EnabledTrackingState: Received 'stop tracking'")
+        print("EnabledTrackingState: Changing state to 'disabled'...")
+        tracker?.update(state: DisabledTrackingState(tracker: tracker))
+        tracker?.stopTracking()
+    }
+    
+    func pauseTracking(for time: TimeInterval) {
+        print("EnabledTrackingState: Received 'pause tracking' for \(time) seconds")
+        print("EnabledTrackingState: Changing state to 'disabled'...")
+        tracker?.update(state: DisabledTrackingState(tracker: tracker))
+        tracker?.pauseTracking(for: time)
+    }
+    
+    func makeCheckIn() {
+        print("EnabledTrackingState: performing check-in at the current location")
+    }
+    
+    func findMyChildren() {
+        print("EnabledTrackingState: searching for children...")
+    }
+}
+
+class DisabledTrackingState: TrackingState {
+    private weak var tracker: LocationTracker?
+    
+    init(tracker: LocationTracker?) {
+        self.tracker = tracker
+    }
+    
+    func startTracking() {
+        print("DisabledTrackingState: Received 'start tracking'")
+        print("DisabledTrackingState: Changing state to 'enabled'...")
+        tracker?.update(state: EnableTrackingState(tracker: tracker))
+    }
+    
+    func stopTracking() {
+        print("DisabledTrackingState: Received 'stop tracking'")
+        print("DisabledTrackingState: Do nothing...")
+    }
+    
+    func pauseTracking(for time: TimeInterval) {
+        print("DisabledTrackingState: Pause tracking for \(time) seconds")
+        
+        for i in 0...Int(time) {
+            print("disabledTrackingState: pause..\(i)")
+        }
+        
+        print("disabledTrackingState: time is over")
+        print("disabledTrackingState: return to enabled state")
+        tracker?.update(state: EnableTrackingState(tracker: tracker))
+        tracker?.startTracking()
+    }
+    
+    func makeCheckIn() {
+        print("DisabledTrackingState: Received 'make check-in'")
+        print("DisabledTrackingState: Changing state to 'enabled'...")
+        tracker?.update(state: EnableTrackingState(tracker: tracker))
+        tracker?.makeCheckIn()
+    }
+    
+    func findMyChildren() {
+        print("DisabledTrackingState: Received 'find my children'")
+        print("DisabledTrackingState: Changing state to 'enabled'...")
+        tracker?.update(state: EnableTrackingState(tracker: tracker))
+        tracker?.findMyChildren()
+    }
+}
+
+print("i am starting working with a location tracker")
+let locationTracker = LocationTracker()
+locationTracker.startTracking()
+locationTracker.pauseTracking(for: 2)
+locationTracker.makeCheckIn()
+locationTracker.findMyChildren()
+locationTracker.stopTracking()

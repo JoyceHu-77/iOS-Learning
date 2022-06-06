@@ -114,3 +114,12 @@ let emojiSmiley = EmojiSmiley()
 printSmileyInfo(emojiSmiley) // Smile! 😀
 printSmileyMetatypeInfo(Smiley.self)
 printSmileyMetatypeInfo(EmojiSmiley.self)
+
+
+// MARK: - Swift Any、AnyObject、AnyClass的区别
+
+// https://juejin.cn/post/6844903672783044616
+// Any: 可以表示任意类型，甚至方法类型（func）
+// AnyObject: 表示任何class类型的实例对象（类似OC中的id类型）
+// AnyClass：表示任意类的元类型.任意类的类型都隐式遵守这个协议.  AnyObject.Type中的.Type就是获取元类型, 辟如你有一个Student类, Student.Type就是获取Student的元类型.
+
