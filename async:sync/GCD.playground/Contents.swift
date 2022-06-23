@@ -17,6 +17,8 @@ import UIKit
 // GCD的队列分为串行队列和并发队列两种，两者都符合 FIFO（先进先出）的原则。两者的主要区别是：执行顺序不同，以及开启线程数不同。
 // 放到串行队列的任务，GCD 会 FIFO（先进先出） 地取出来一个，执行一个，然后取下一个，这样一个一个的执行。
 // 放到并行队列的任务，GCD 也会 FIFO的取出来，但不同的是，它取出来一个就会放到别的线程，然后再取出来一个又放到另一个的线程。
+// 串行队列中的任务在同一个线程中运行，只有上个任务执行完毕，才会调度下个任务
+// 并行队列中的任务可在不同空闲线程中运行，不会强制来等待上一个任务执行完毕，而是会在有空闲线程时来继续调度下一个任务
 
 // 任务和队列的组合
 // 同步任务+串行队列：同步任务不会开启新的线程，任务串行执行。
@@ -111,6 +113,8 @@ func performAsyncNextSync(with queue: DispatchQueue) {
         }
     }
 }
+//performAsyncNextSync(with: getConcurrentQueue("AsyncNextSync.Concurrent.queue")) // 6 6
+//performAsyncNextSync(with: getSerialQueue("AsyncNextSync.Serial.queue")) // 6 死锁
 
 func performAsyncNextAsync(with queue: DispatchQueue) {
     queue.async {
@@ -187,3 +191,56 @@ func deadlockTest() {
 
 // MARK: - 实例应用场景
 /// https://juejin.cn/post/6844903537407705102
+
+//func test() {
+//    let queue = getConcurrentQueue("test.Concurrent.queue")
+//
+//    queue.async {
+//        print("async1:\(getCurrentThread())")
+//    }
+//    queue.sync {
+//        print("sync:\(getCurrentThread())")
+//    }
+//    queue.async {
+//        print("async2:\(getCurrentThread())")
+//    }
+//    queue.async {
+//        print("async3:\(getCurrentThread())")
+//    }
+//}
+//for i in 0..<10 {
+//    test()
+//}
+let serialQue = DispatchQueue(label: "serialQue")
+let concurrenceQueue = DispatchQueue(label: "concurrenceQueue",
+                                     qos: .background,
+                                     attributes: DispatchQueue.Attributes.concurrent)
+print("start")
+for i in 0...4 {
+    concurrenceQueue.async {
+        sleep(UInt32(i * 2))
+        print("concurrenceQueue async \(i) \(#line) \(Thread.current)")
+    }
+    concurrenceQueue.sync {
+        sleep(UInt32(i * 2))
+        print("concurrenceQueue sync \(i) \(#line) \(Thread.current)")
+
+    }
+}
+
+for i in 0...4 {
+    serialQue.async {
+        sleep(UInt32(i * 2))
+        sleep(2)
+        print("serialQue async \(i) \(#line) \(Thread.current)")
+    }
+    serialQue.sync {
+        sleep(UInt32(i * 2))
+        print("serialQue sync \(i) \(#line) \(Thread.current)")
+    }
+}
+
+//getGlobalQueue().sync {
+//    print("GlobalQueue sync  \(Thread.current)")
+//}
+print("end")
