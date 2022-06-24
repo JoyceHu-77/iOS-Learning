@@ -13,10 +13,10 @@ import UIKit
 // 两者的主要区别是是否等待队列的任务执行结束，以及是否具备开启新线程的能力，是否会阻塞当前线程。
 
 // GCD队列
-// 在GCD里面队列是指执行任务的等待队列，是用来存放任务的。
+// 在GCD里面队列是指执行任务的等待队列，是用来存放调度任务的。
 // GCD的队列分为串行队列和并发队列两种，两者都符合 FIFO（先进先出）的原则。两者的主要区别是：执行顺序不同，以及开启线程数不同。
-// 放到串行队列的任务，GCD 会 FIFO（先进先出） 地取出来一个，执行一个，然后取下一个，这样一个一个的执行。
-// 放到并行队列的任务，GCD 也会 FIFO的取出来，但不同的是，它取出来一个就会放到别的线程，然后再取出来一个又放到另一个的线程。
+// 都遵循FIFO（First In First Out -- 先入先出）的规则
+// 在Serial Queue中要等到前面的任务出队列并执行完后，下一个任务才能出队列进行执行。而Concurrent Queue则不然，只要是队列前面的任务出队列了，并且还有有空余线程，不管前面的任务是否执行完了，下一任务都可以进行出队列。
 // 串行队列中的任务在同一个线程中运行，只有上个任务执行完毕，才会调度下个任务
 // 并行队列中的任务可在不同空闲线程中运行，不会强制来等待上一个任务执行完毕，而是会在有空闲线程时来继续调度下一个任务
 
@@ -113,8 +113,6 @@ func performAsyncNextSync(with queue: DispatchQueue) {
         }
     }
 }
-//performAsyncNextSync(with: getConcurrentQueue("AsyncNextSync.Concurrent.queue")) // 6 6
-//performAsyncNextSync(with: getSerialQueue("AsyncNextSync.Serial.queue")) // 6 死锁
 
 func performAsyncNextAsync(with queue: DispatchQueue) {
     queue.async {
@@ -154,7 +152,8 @@ func performSyncNextSync(with queue: DispatchQueue) {
 //performAsyncNextAsync(with: getSerialQueue("AsyncNextAsync.Serial.queue")) // 7 7
 
 // 死锁情况
-/// 同步操作阻塞当前的主线程，然后把block中的任务放到主线程中去执行，但这个时候主线程已经被阻塞了，所以block中的任务就不能完成，导致死锁
+/// 同步操作阻塞当前的主线程，然后把block中的任务放到主线程队列中去执行，但主队列中上个任务由于被阻塞仍然未完成
+/// 所以block中的任务就不能出列执行（串行，顺序执行一次执行一个任务），导致死锁
 func calledInMainThread() {
     print("之前:\(getCurrentThread())")
     getMainQueue().sync {
@@ -180,37 +179,117 @@ func deadlockTest() {
 }
 //deadlockTest()
 
-// MARK: - GCD Barrier(建议在自定义并发队列中使用)
 
 // MARK: - GCD Group
+// 1.队列与组自动关联并执行：队列中任务的执行以及通知结果的处理都是异步执行的，不会阻塞当前的线程。
+func performGroupQueue() {
+    print("任务组自动管理")
+    let concurrentQueue = getConcurrentQueue("group.test")
+    let group = DispatchGroup()
+    // 将group与queue进行管理，并且自动执行
+    for i in 1...3 {
+        concurrentQueue.async(group: group) {
+            currentThreadSleep(1)
+            print("任务\(i)执行完毕")
+        }
+    }
+    // 队列组中任务都执行完毕后发出通知并执行block内容
+    group.notify(queue: getMainQueue()) {
+        print("所有任务组执行完毕")
+    }
+    print("异步执行测试，不会阻塞当前线程")
+}
+//performGroupQueue()
+
+// 2.手动关联队列与任务组：group.enter()和group.leave()成对出现
+func performGroupUseEnterAndLeave() {
+    print("任务组手动管理")
+    let concurrentQueue = getConcurrentQueue("group.test")
+    let group = DispatchGroup()
+    // 将group与queue进行手动关联和管理，并且自动执行
+    for i in 1...3 {
+        group.enter() //进入group队列组
+        concurrentQueue.async {
+            currentThreadSleep(1)
+            print("任务\(i)执行完毕")
+            group.leave() //离开队列组
+        }
+    }
+    group.wait() // 阻塞当前线程，直到所有任务执行完毕
+    print("任务组执行完毕")
+    group.notify(queue: concurrentQueue) {
+        print("手动管理的队列执行OK")
+    }
+}
+//performGroupUseEnterAndLeave()
+
+
+// MARK: - GCD Barrier(建议在自定义并发队列中使用)
+// 任务栅栏就是将队列中的任务进行隔离的，是任务能分拨的进行异步执行。
+// 有栅栏的拦着的话，会先执行栅栏前面的任务。等前面的任务都执行完毕了，会执行栅栏自带的Block ，最后异步执行栅栏后方的任务。
+// 当障碍执行时，它本质上就如同一个串行队列。也就是，障碍是唯一在执行的事物。
+// dispatch_barrier_async或dispatch_barrier_sync唯一不同的是async不会阻塞线程。
+func useBarrirtAsync() {
+    let concurrentQueue = getConcurrentQueue("barrier.concurrent.queue")
+    for i in 0...3 {
+        concurrentQueue.async {
+            currentThreadSleep(Double(i))
+            print("第一批：\(i)\(getCurrentThread())")
+        }
+    }
+    concurrentQueue.async(flags: .barrier) {
+        print("\n第一批执行完毕后才会执行第二批\(getCurrentThread())\n")
+    }
+    for i in 0...3 {
+        concurrentQueue.async {
+            currentThreadSleep(Double(i))
+            print("第二批：\(i)\(getCurrentThread())")
+        }
+    }
+    print("异步执行测试")
+}
+//useBarrirtAsync()
+
 
 // MARK: - GCD Semaphore
+// 如果信号量为0那么就是上锁的状态，其他线程想使用资源就得等待了。如果信号量不为零，那么就是开锁状态，开锁状态下资源就可以访问。
+// semaphoreLock.wait()和semaphoreLock.signal()一般成对出现
+func useSemaphoreLock() {
+    let concurrentQueue = getConcurrentQueue("semaphore.concurrent.test")
+    // 创建信号量
+    let semaphoreLock = DispatchSemaphore(value: 1) // 创建信号量，并指定信号量为1
+    var testNumber = 0
+    for index in 1...10 {
+        concurrentQueue.async {
+            print("第\(index)次访问1")
+            semaphoreLock.wait() // 上锁，信号量减1
+            print("第\(index)次访问2")
+            testNumber += 1
+            currentThreadSleep(1)
+            print("线程：\(getCurrentThread())")
+            print("第\(index)次执行: testNumber = \(testNumber)")
+            semaphoreLock.signal() // 开锁，信号量加1
+        }
+    }
+    print("异步执行测试")
+}
+//useSemaphoreLock()
+
 
 // MARK: - 数据竞争Data race（读写者问题）
-// barrier || 同心锁
+// 有时候多个线程对一个数据进行操作的时候，为了数据的一致性，只允许一次只有一个线程来操作这个数据，保证一次只有一个线程来修改我们的资源数据
+// barrier(用在写操作上) || Semaphore || 同心锁（同步串行）
+
+
+// MARK: - GCD Source
+// dispatch_source的主要功能就是对某些类型事件的对象进行监听，当事件发生时将要处理的事件放到关联的队列中进行执行。
+// dispatch源支持事件的取消，我们也可以对取消事件的进行处理。
+
 
 // MARK: - 实例应用场景
 /// https://juejin.cn/post/6844903537407705102
+/// 耗时操作；延时执行；定时器；并发遍历；控制并发数；时序管理；自定义数据监听；监听进程；监听目录结构；线程安全
 
-//func test() {
-//    let queue = getConcurrentQueue("test.Concurrent.queue")
-//
-//    queue.async {
-//        print("async1:\(getCurrentThread())")
-//    }
-//    queue.sync {
-//        print("sync:\(getCurrentThread())")
-//    }
-//    queue.async {
-//        print("async2:\(getCurrentThread())")
-//    }
-//    queue.async {
-//        print("async3:\(getCurrentThread())")
-//    }
-//}
-//for i in 0..<10 {
-//    test()
-//}
 let serialQue = DispatchQueue(label: "serialQue")
 let concurrenceQueue = DispatchQueue(label: "concurrenceQueue",
                                      qos: .background,
@@ -224,7 +303,6 @@ for i in 0...4 {
     concurrenceQueue.sync {
         sleep(UInt32(i * 2))
         print("concurrenceQueue sync \(i) \(#line) \(Thread.current)")
-
     }
 }
 
@@ -239,8 +317,4 @@ for i in 0...4 {
         print("serialQue sync \(i) \(#line) \(Thread.current)")
     }
 }
-
-//getGlobalQueue().sync {
-//    print("GlobalQueue sync  \(Thread.current)")
-//}
 print("end")
