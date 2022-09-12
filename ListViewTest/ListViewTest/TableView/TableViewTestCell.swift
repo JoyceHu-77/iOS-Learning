@@ -23,6 +23,10 @@ class TableViewTestCell: UITableViewCell {
         setupUI()
     }
     
+    override func prepareForReuse() {
+        print("🐢🐢🐢 prepareForReuse")
+    }
+    
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.backgroundColor = .lightGray
