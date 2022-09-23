@@ -247,4 +247,8 @@ extension TableViewTestViewController: UITableViewDataSource {
     }
 }
 
-extension TableViewTestViewController: UITableViewDelegate {}
+extension TableViewTestViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print("🐤🐤🐤 willDisplay")
+    }
+}
