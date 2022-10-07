@@ -18,6 +18,8 @@
 		ED987C7428CF2066004690A3 /* TableViewTestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED987C7328CF2066004690A3 /* TableViewTestCell.swift */; };
 		ED987C7628CF2377004690A3 /* TableViewTestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED987C7528CF2377004690A3 /* TableViewTestModel.swift */; };
 		EDBC4A8D28EFEC0100CC5226 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A8C28EFEC0100CC5226 /* APICaller.swift */; };
+		EDBC4A8F28F002AE00CC5226 /* TableViewRefreshVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A8E28F002AE00CC5226 /* TableViewRefreshVC.swift */; };
+		EDBC4A9128F0072400CC5226 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9028F0072400CC5226 /* APIResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		ED987C7328CF2066004690A3 /* TableViewTestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewTestCell.swift; sourceTree = "<group>"; };
 		ED987C7528CF2377004690A3 /* TableViewTestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewTestModel.swift; sourceTree = "<group>"; };
 		EDBC4A8C28EFEC0100CC5226 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		EDBC4A8E28F002AE00CC5226 /* TableViewRefreshVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewRefreshVC.swift; sourceTree = "<group>"; };
+		EDBC4A9028F0072400CC5226 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 		ED59F3B728EFE9A100D99B51 /* PullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				EDBC4A8E28F002AE00CC5226 /* TableViewRefreshVC.swift */,
+				EDBC4A9028F0072400CC5226 /* APIResponse.swift */,
 			);
 			path = PullToRefresh;
 			sourceTree = "<group>";
@@ -188,8 +194,10 @@
 				ED987C6128CDDED6004690A3 /* ViewController.swift in Sources */,
 				ED59F3BA28EFEA1100D99B51 /* TableViewLoadMoreVC.swift in Sources */,
 				ED987C7628CF2377004690A3 /* TableViewTestModel.swift in Sources */,
+				EDBC4A9128F0072400CC5226 /* APIResponse.swift in Sources */,
 				ED987C7428CF2066004690A3 /* TableViewTestCell.swift in Sources */,
 				ED987C5D28CDDED6004690A3 /* AppDelegate.swift in Sources */,
+				EDBC4A8F28F002AE00CC5226 /* TableViewRefreshVC.swift in Sources */,
 				ED987C7128CDE14D004690A3 /* TableViewTestViewController.swift in Sources */,
 				ED987C5F28CDDED6004690A3 /* SceneDelegate.swift in Sources */,
 				EDBC4A8D28EFEC0100CC5226 /* APICaller.swift in Sources */,
