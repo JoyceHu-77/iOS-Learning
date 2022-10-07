@@ -43,6 +43,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED59F3B628EFE91700D99B51 /* InfiniteScroll */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = InfiniteScroll;
+			sourceTree = "<group>";
+		};
+		ED59F3B728EFE9A100D99B51 /* PullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PullToRefresh;
+			sourceTree = "<group>";
+		};
+		ED59F3B828EFE9BE00D99B51 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				ED987C7228CDE16B004690A3 /* TableView */,
+			);
+			path = Basic;
+			sourceTree = "<group>";
+		};
 		ED987C5028CDDED6004690A3 = {
 			isa = PBXGroup;
 			children = (
@@ -65,7 +87,9 @@
 				ED987C5C28CDDED6004690A3 /* AppDelegate.swift */,
 				ED987C5E28CDDED6004690A3 /* SceneDelegate.swift */,
 				ED987C6028CDDED6004690A3 /* ViewController.swift */,
-				ED987C7228CDE16B004690A3 /* TableView */,
+				ED59F3B828EFE9BE00D99B51 /* Basic */,
+				ED59F3B728EFE9A100D99B51 /* PullToRefresh */,
+				ED59F3B628EFE91700D99B51 /* InfiniteScroll */,
 				ED987C6228CDDED6004690A3 /* Main.storyboard */,
 				ED987C6528CDDED9004690A3 /* Assets.xcassets */,
 				ED987C6728CDDED9004690A3 /* LaunchScreen.storyboard */,
