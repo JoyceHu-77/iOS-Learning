@@ -20,6 +20,9 @@
 		EDBC4A8D28EFEC0100CC5226 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A8C28EFEC0100CC5226 /* APICaller.swift */; };
 		EDBC4A8F28F002AE00CC5226 /* TableViewRefreshVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A8E28F002AE00CC5226 /* TableViewRefreshVC.swift */; };
 		EDBC4A9128F0072400CC5226 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9028F0072400CC5226 /* APIResponse.swift */; };
+		EDBC4A9428F170D200CC5226 /* TableViewPrefetchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9328F170D200CC5226 /* TableViewPrefetchVC.swift */; };
+		EDBC4A9728F1731000CC5226 /* PrefetchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9628F1731000CC5226 /* PrefetchViewModel.swift */; };
+		EDBC4A9928F1740900CC5226 /* TableViewPrefetchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9828F1740900CC5226 /* TableViewPrefetchCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		EDBC4A8C28EFEC0100CC5226 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		EDBC4A8E28F002AE00CC5226 /* TableViewRefreshVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewRefreshVC.swift; sourceTree = "<group>"; };
 		EDBC4A9028F0072400CC5226 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		EDBC4A9328F170D200CC5226 /* TableViewPrefetchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPrefetchVC.swift; sourceTree = "<group>"; };
+		EDBC4A9628F1731000CC5226 /* PrefetchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefetchViewModel.swift; sourceTree = "<group>"; };
+		EDBC4A9828F1740900CC5226 /* TableViewPrefetchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPrefetchCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +108,8 @@
 				ED59F3B828EFE9BE00D99B51 /* Basic */,
 				ED59F3B728EFE9A100D99B51 /* PullToRefresh */,
 				ED59F3B628EFE91700D99B51 /* InfiniteScroll */,
+				EDBC4A9228F170A700CC5226 /* Prefetch */,
+				EDBC4A9528F171AB00CC5226 /* SelfSizing */,
 				ED987C6228CDDED6004690A3 /* Main.storyboard */,
 				ED987C6528CDDED9004690A3 /* Assets.xcassets */,
 				ED987C6728CDDED9004690A3 /* LaunchScreen.storyboard */,
@@ -118,6 +126,23 @@
 				ED987C7528CF2377004690A3 /* TableViewTestModel.swift */,
 			);
 			path = TableView;
+			sourceTree = "<group>";
+		};
+		EDBC4A9228F170A700CC5226 /* Prefetch */ = {
+			isa = PBXGroup;
+			children = (
+				EDBC4A9328F170D200CC5226 /* TableViewPrefetchVC.swift */,
+				EDBC4A9828F1740900CC5226 /* TableViewPrefetchCell.swift */,
+				EDBC4A9628F1731000CC5226 /* PrefetchViewModel.swift */,
+			);
+			path = Prefetch;
+			sourceTree = "<group>";
+		};
+		EDBC4A9528F171AB00CC5226 /* SelfSizing */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SelfSizing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,10 +222,13 @@
 				EDBC4A9128F0072400CC5226 /* APIResponse.swift in Sources */,
 				ED987C7428CF2066004690A3 /* TableViewTestCell.swift in Sources */,
 				ED987C5D28CDDED6004690A3 /* AppDelegate.swift in Sources */,
+				EDBC4A9428F170D200CC5226 /* TableViewPrefetchVC.swift in Sources */,
 				EDBC4A8F28F002AE00CC5226 /* TableViewRefreshVC.swift in Sources */,
 				ED987C7128CDE14D004690A3 /* TableViewTestViewController.swift in Sources */,
 				ED987C5F28CDDED6004690A3 /* SceneDelegate.swift in Sources */,
 				EDBC4A8D28EFEC0100CC5226 /* APICaller.swift in Sources */,
+				EDBC4A9928F1740900CC5226 /* TableViewPrefetchCell.swift in Sources */,
+				EDBC4A9728F1731000CC5226 /* PrefetchViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
