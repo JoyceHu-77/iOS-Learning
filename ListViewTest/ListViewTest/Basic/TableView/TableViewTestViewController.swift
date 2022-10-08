@@ -226,7 +226,7 @@ extension TableViewTestViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         print("🌊🌊🌊 heightForRowAt section:\(indexPath.section) row:\(indexPath.row)")
         if isChangeHeightSelected {
-            return 80
+            return 100
         } else {
             return UITableView.automaticDimension
         }
