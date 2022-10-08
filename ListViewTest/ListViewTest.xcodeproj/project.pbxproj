@@ -23,6 +23,8 @@
 		EDBC4A9428F170D200CC5226 /* TableViewPrefetchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9328F170D200CC5226 /* TableViewPrefetchVC.swift */; };
 		EDBC4A9728F1731000CC5226 /* PrefetchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9628F1731000CC5226 /* PrefetchViewModel.swift */; };
 		EDBC4A9928F1740900CC5226 /* TableViewPrefetchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9828F1740900CC5226 /* TableViewPrefetchCell.swift */; };
+		EDBC4A9B28F17E5000CC5226 /* TableViewSelfSizingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9A28F17E5000CC5226 /* TableViewSelfSizingVC.swift */; };
+		EDBC4A9D28F17F2D00CC5226 /* SelfSizingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBC4A9C28F17F2D00CC5226 /* SelfSizingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,8 @@
 		EDBC4A9328F170D200CC5226 /* TableViewPrefetchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPrefetchVC.swift; sourceTree = "<group>"; };
 		EDBC4A9628F1731000CC5226 /* PrefetchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefetchViewModel.swift; sourceTree = "<group>"; };
 		EDBC4A9828F1740900CC5226 /* TableViewPrefetchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewPrefetchCell.swift; sourceTree = "<group>"; };
+		EDBC4A9A28F17E5000CC5226 /* TableViewSelfSizingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSelfSizingVC.swift; sourceTree = "<group>"; };
+		EDBC4A9C28F17F2D00CC5226 /* SelfSizingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +145,8 @@
 		EDBC4A9528F171AB00CC5226 /* SelfSizing */ = {
 			isa = PBXGroup;
 			children = (
+				EDBC4A9A28F17E5000CC5226 /* TableViewSelfSizingVC.swift */,
+				EDBC4A9C28F17F2D00CC5226 /* SelfSizingCell.swift */,
 			);
 			path = SelfSizing;
 			sourceTree = "<group>";
@@ -221,6 +227,7 @@
 				ED987C7628CF2377004690A3 /* TableViewTestModel.swift in Sources */,
 				EDBC4A9128F0072400CC5226 /* APIResponse.swift in Sources */,
 				ED987C7428CF2066004690A3 /* TableViewTestCell.swift in Sources */,
+				EDBC4A9D28F17F2D00CC5226 /* SelfSizingCell.swift in Sources */,
 				ED987C5D28CDDED6004690A3 /* AppDelegate.swift in Sources */,
 				EDBC4A9428F170D200CC5226 /* TableViewPrefetchVC.swift in Sources */,
 				EDBC4A8F28F002AE00CC5226 /* TableViewRefreshVC.swift in Sources */,
@@ -228,6 +235,7 @@
 				ED987C5F28CDDED6004690A3 /* SceneDelegate.swift in Sources */,
 				EDBC4A8D28EFEC0100CC5226 /* APICaller.swift in Sources */,
 				EDBC4A9928F1740900CC5226 /* TableViewPrefetchCell.swift in Sources */,
+				EDBC4A9B28F17E5000CC5226 /* TableViewSelfSizingVC.swift in Sources */,
 				EDBC4A9728F1731000CC5226 /* PrefetchViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
